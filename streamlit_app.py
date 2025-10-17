@@ -46,9 +46,13 @@ filtered_df = wine_df[wine_df['type'].isin(selected_types)]
 ''
 st.header('Quality distribution', divider='gray')
 ''
-st.bar_chart(
-    filtered_df.groupby('quality')['quality'].count()
+chart_df = (
+    filtered_df.groupby('quality')
+    .size()
+    .reset_index(name='count')
 )
+
+st.bar_chart(chart_df, x='quality', y='count')
 
 ''
 st.header('Average metrics by wine type', divider='gray')
